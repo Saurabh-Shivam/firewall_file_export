@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Export Result</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(135deg, #e8f0f7, #f6f8fb);
+        min-height: 100vh;
+      }
+
+      .card {
+        width: 560px;
+        margin: 60px auto;
+        background: white;
+        padding: 25px 30px;
+        border-radius: 10px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        margin-top: 0;
+        color: #1f2937;
+      }
+
+      .status {
+        background: #f1f5f9;
+        padding: 10px 14px;
+        margin-bottom: 10px;
+        border-left: 4px solid #2563eb;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 10px 16px;
+        margin-right: 10px;
+        margin-top: 10px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .btn-download {
+        background: #16a34a;
+        color: white;
+      }
+
+      .btn-back {
+        background: #e5e7eb;
+        color: #111827;
+      }
+
+      /* Toast */
+      .toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #16a34a;
+        color: white;
+        padding: 12px 18px;
+        border-radius: 6px;
+        font-size: 14px;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: all 0.4s ease;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+
+  <body onload="showToast()">
+    <div class="card">
+      <h2>📦 Export Completed</h2>
+
+      {% for line in status %}
+      <div class="status">{{ line }}</div>
+      {% endfor %} {% if files.csv %}
+      <a class="btn btn-download" href="/download/{{ files.csv }}">
+        ⬇ Download CSV
+      </a>
+      {% endif %} {% if files.json %}
+      <a class="btn btn-download" href="/download/{{ files.json }}">
+        ⬇ Download JSON
+      </a>
+      {% endif %}
+
+      <br /><br />
+      <a class="btn btn-back" href="/">← Back to Export</a>
+    </div>
+
+    <div id="toast" class="toast">✅ Export completed successfully</div>
+
+    <script>
+      function showToast() {
+        const toast = document.getElementById("toast");
+        toast.classList.add("show");
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>
